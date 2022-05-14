@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "build": "babel-node build",
+    "build": "rm -rf dist && babel -d dist",
     "serve": "node dist/server.js",
     "heroku-prebuild": "npm install"
   },
