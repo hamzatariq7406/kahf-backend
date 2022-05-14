@@ -9,11 +9,11 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const searchKeyword = req.query.searchKeyword
       ? {
-          name: {
-            $regex: req.query.searchKeyword,
-            $options: 'i',
-          },
-        }
+        name: {
+          $regex: req.query.searchKeyword,
+          $options: 'i',
+        },
+      }
       : {};
     const products = await Product.find({ ...searchKeyword });
     res.send(products);
@@ -33,11 +33,15 @@ productRouter.post(
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
-      name: 'sample product',
-      description: 'sample desc',
-      category: 'sample category',
-      brand: 'sample brand',
-      image: '/images/product-1.jpg',
+      productName: req.body.productName,
+      description: req.body.description,
+      category: req.body.category,
+      images: req.body.images,
+      brandName: req.body.brandName,
+      heroImage: req.body.heroImage,
+      listPrice: req.body.listPrice,
+      salePrice: req.body.salePrice,
+      quantity: req.body.quantity
     });
     const createdProduct = await product.save();
     if (createdProduct) {

@@ -10,7 +10,7 @@ import productRouter from './routers/productRouter';
 import uploadRouter from './routers/uploadRouter';
 
 mongoose
-  .connect(config.MONGODB_URL, {
+  .connect("mongodb+srv://tariqh1:hamza7406@cluster0.5jnph.mongodb.net/ecomm_new?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -19,7 +19,7 @@ mongoose
     console.log('Connected to mongodb.');
   })
   .catch((error) => {
-    console.log(error.reason);
+    console.log(error);
   });
 const app = express();
 app.use(cors());

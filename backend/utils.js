@@ -9,7 +9,7 @@ export const generateToken = (user) => {
       email: user.email,
       isAdmin: user.isAdmin,
     },
-    config.JWT_SECRET
+    "jwt_secret"
   );
 };
 export const isAuth = (req, res, next) => {
@@ -18,7 +18,7 @@ export const isAuth = (req, res, next) => {
     res.status(401).send({ message: 'Token is not supplied' });
   } else {
     const token = bearerToken.slice(7, bearerToken.length);
-    jwt.verify(token, config.JWT_SECRET, (err, data) => {
+    jwt.verify(token, "jwt_secret", (err, data) => {
       if (err) {
         res.status(401).send({ message: 'Invalid Token' });
       } else {
