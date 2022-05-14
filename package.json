@@ -4,10 +4,10 @@
   "description": "JS AMAZONA",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch backend --exec babel-node backend/server.js",
-    "build": "rm -rf dist && babel backend -d dist && cd frontend && npm install && npm run build",
+    "start": "node server.js",
+    "build": "babel-node build",
     "serve": "node dist/server.js",
-    "heroku-prebuild": "cd frontend && npm install --dev"
+    "heroku-prebuild": "npm install"
   },
   "repository": {
     "type": "git",
