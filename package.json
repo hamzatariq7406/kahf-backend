@@ -4,8 +4,8 @@
   "description": "JS AMAZONA",
   "main": "index.js",
   "scripts": {
+    "ng": "ng",
     "start": "node server.js",
-    "build": "rm -rf dist && babel -d dist",
     "serve": "node dist/server.js",
     "heroku-prebuild": "npm install"
   },
