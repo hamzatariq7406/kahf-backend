@@ -1,13 +1,13 @@
-import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import path from 'path';
-import config from './config';
-import userRouter from './routers/userRouter';
-import orderRouter from './routers/orderRouter';
-import productRouter from './routers/productRouter';
-import uploadRouter from './routers/uploadRouter';
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const path = require('path');
+const config = require('./config');
+const userRouter = require('./routers/userRouter');
+const orderRouter = require('./routers/orderRouter');
+const productRouter = require('./routers/productRouter');
+const uploadRouter = require('./routers/uploadRouter');
 
 mongoose
   .connect("mongodb+srv://tariqh1:hamza7406@cluster0.5jnph.mongodb.net/ecomm_new?retryWrites=true&w=majority", {

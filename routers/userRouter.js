@@ -1,7 +1,7 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import User from '../models/userModel';
-import { generateToken, isAuth } from '../utils';
+const express = require('express');
+const expressAsyncHandler = require('express-async-handler');
+const User = require('../models/userModel');
+const {generateToken,isAuth} = require('../utils');
 
 const userRouter = express.Router();
 
@@ -93,4 +93,4 @@ userRouter.put(
     }
   })
 );
-export default userRouter;
+module.exports =  userRouter;

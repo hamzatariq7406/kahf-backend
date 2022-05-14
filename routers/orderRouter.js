@@ -1,9 +1,9 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import { isAuth, isAdmin } from '../utils';
-import Order from '../models/orderModel';
-import User from '../models/userModel';
-import Product from '../models/productModel';
+const express = require('express');
+const expressAsyncHandler = require('express-async-handler');
+const User = require('../models/userModel');
+const Order = require('../models/orderModel');
+const Product = require('../models/productModel');
+const { isAdmin, isAuth } = require('../utils');
 
 const orderRouter = express.Router();
 orderRouter.get(
@@ -153,4 +153,4 @@ orderRouter.put(
   })
 );
 
-export default orderRouter;
+module.exports = orderRouter;
