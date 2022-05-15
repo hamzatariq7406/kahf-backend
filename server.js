@@ -8,6 +8,8 @@ const userRouter = require('./routers/userRouter');
 const orderRouter = require('./routers/orderRouter');
 const productRouter = require('./routers/productRouter');
 const uploadRouter = require('./routers/uploadRouter');
+const addressRouter = require('./routers/addressRouter');
+const contactRouter = require('./routers/contactRouter');
 
 mongoose
   .connect("mongodb+srv://tariqh1:hamza7406@cluster0.5jnph.mongodb.net/ecomm_new?retryWrites=true&w=majority", {
@@ -28,6 +30,9 @@ app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/address', addressRouter);
+app.use('/api/contact', contactRouter);
+
 app.get('/api/paypal/clientId', (req, res) => {
   res.send({ clientId: config.PAYPAL_CLIENT_ID });
 });
