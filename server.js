@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const config = require('./config');
+const cookieParser = require('cookie-parser');
 const userRouter = require('./routers/userRouter');
 const orderRouter = require('./routers/orderRouter');
 const productRouter = require('./routers/productRouter');
@@ -23,9 +24,17 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
 const app = express();
+
+app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use((req,res,next) => {
+  console.log(req.headers);
+  next();
+})
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);

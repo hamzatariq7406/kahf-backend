@@ -21,6 +21,7 @@ const productSchema = new mongoose.Schema(
     productName: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
+    subCategory: { type: String, required: true },
     images: [{ type: String }],
     brandName: { type: String },
     heroImage: { type: String, required: true },
