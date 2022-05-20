@@ -37,6 +37,7 @@ productRouter.post(
       productName: req.body.productName,
       description: req.body.description,
       category: req.body.category,
+      subCategory: req.body.subCategory,
       images: req.body.images,
       brandName: req.body.brandName,
       heroImage: req.body.heroImage,
