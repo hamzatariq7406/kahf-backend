@@ -20,6 +20,41 @@ productRouter.get(
     res.send(products);
   })
 );
+
+productRouter.get(
+  '/popular-products',
+  expressAsyncHandler(async (req, res) => {
+    const products = await Product.find({ "productName": { $regex: "m" } });
+    res.send(products);
+  })
+);
+
+productRouter.get(
+  '/best-seller-products',
+  expressAsyncHandler(async (req, res) => {
+    const products = await Product.find({ "productName": { $regex: "an" } });
+    res.send(products);
+  })
+);
+
+productRouter.post(
+  '/product-by-subcategory',
+  expressAsyncHandler(async (req, res) => {
+    const category = req.body.category;
+    const products = await Product.find({ 'subCategory': category });
+    res.send(products);
+  })
+);
+
+productRouter.post(
+  '/product-by-category',
+  expressAsyncHandler(async (req, res) => {
+    const category = req.body.category;
+    const products = await Product.find({ 'category': category });
+    res.send(products);
+  })
+);
+
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {

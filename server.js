@@ -31,10 +31,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use((req,res,next) => {
-  console.log(req.headers);
-  next();
-})
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);

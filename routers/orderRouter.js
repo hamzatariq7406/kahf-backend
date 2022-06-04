@@ -2,6 +2,7 @@ const express = require('express');
 const expressAsyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const Order = require('../models/orderModel');
+const Address = require("../models/addressModel");
 const Product = require('../models/productModel');
 const { isAdmin, isAuth } = require('../utils');
 
@@ -58,7 +59,7 @@ orderRouter.get(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user');
+    const orders = await Order.find({}).populate('user').populate("address");
     res.send(orders);
   })
 );
@@ -67,15 +68,42 @@ orderRouter.get(
   '/mine',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({ user: req.user._id });
-    res.send(orders);
+    const orders = await Order.find({ user: req.user._id }).populate('user').populate("address");
+    const newArray = orders.map(item => {
+      let deliveryStatus = "Running";
+      if (item.isDelivered) {
+        deliveryStatus = "Delivered";
+      }
+      const trackNum = item._id.toString().substring(0, 7);
+      const someDate = new Date(item.deliveredAt);
+      const date = new Date(someDate.setDate(someDate.getDate())).toLocaleDateString('en-us', { weekday: "short", year: "numeric", month: "short", day: "numeric" })
+      return {
+        id: item._id,
+        tracking_number: trackNum,
+        amount: item.totalPrice,
+        total: item.totalPrice,
+        delivery_fee: 0,
+        created_at: item.paidAt,
+        discount: 0,
+        status: {
+          name: deliveryStatus
+        },
+        shipping_address: {
+          street_address: item.address.address.formatted_address
+        },
+        delivery_time: date,
+        products: item.orderItems
+      }
+    })
+
+    res.send(newArray);
   })
 );
 orderRouter.get(
   '/:id',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user').populate("address");
     if (order) {
       res.send(order);
     } else {
@@ -87,15 +115,16 @@ orderRouter.post(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
+    const userId = req.user._id;
     const order = new Order({
       orderItems: req.body.orderItems,
       user: req.user._id,
-      shipping: req.body.shipping,
-      payment: req.body.payment,
-      itemsPrice: req.body.itemsPrice,
-      taxPrice: req.body.taxPrice,
-      shippingPrice: req.body.shippingPrice,
       totalPrice: req.body.totalPrice,
+      isPaid: req.body.isPaid,
+      address: req.body.address,
+      isDelivered: req.body.isDelivered,
+      paidAt: req.body.paidAt,
+      deliveredAt: req.body.deliveredAt
     });
     const createdOrder = await order.save();
     res.status(201).send({ message: 'New Order Created', order: createdOrder });
